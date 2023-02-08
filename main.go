@@ -23,9 +23,9 @@ func main() {
 func SignIn(client *http.Client) bool {
 	//生成要访问的url
 	url := "https://www.hifini.com/sg_sign.htm"
-	cookie := os.Getenv("COOKIE")
+	cookie := os.Getenv("COOKIES")
 	if cookie == "" {
-		fmt.Println("COOKIE不存在，请检查是否添加")
+		fmt.Println("COOKIES不存在，请检查是否添加")
 		return false
 	}
 	//提交请求
