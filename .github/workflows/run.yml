@@ -19,5 +19,5 @@ jobs:
                 go-version: '^1.14'
             - name: HIFINI 自动签到
               env:
-                COOKIE: ${{ secrets.COOKIE }}
+                COOKIES: ${{ secrets.COOKIES }}
               run: go run main.go
