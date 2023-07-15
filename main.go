@@ -12,9 +12,9 @@ func main() {
 	client := &http.Client{}
 	success := SignIn(client)
 	if success {
-		fmt.Println("签到成功!")
+		fmt.Println("签到成功!!!")
 	} else {
-		fmt.Println("签到失败!")
+		fmt.Println("签到失败!!!")
 		os.Exit(3)
 	}
 }
