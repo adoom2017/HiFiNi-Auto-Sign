@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -38,7 +38,7 @@ func SignIn(client *http.Client) bool {
 		panic(err)
 	}
 	defer response.Body.Close()
-	buf, _ := ioutil.ReadAll(response.Body)
+	buf, _ := io.ReadAll(response.Body)
 	fmt.Println(string(buf))
-	return strings.Contains(string(buf), "成功")
+	return strings.Contains(string(buf), "成功") || strings.Contains(string(buf), "已经签过")
 }
