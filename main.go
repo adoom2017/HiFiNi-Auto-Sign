@@ -28,7 +28,7 @@ func SignIn(client *http.Client) bool {
 		fmt.Println("COOKIES不存在，请检查是否添加")
 		return false
 	}
-	//提交请求
+	//提交请求，修改变化
 	reqest, err := http.NewRequest("POST", url, nil)
 	reqest.Header.Add("Cookie", cookie)
 	reqest.Header.Add("x-requested-with", "XMLHttpRequest")
