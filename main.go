@@ -32,7 +32,7 @@ func SignIn(client *http.Client) bool {
 	reqest, err := http.NewRequest("POST", url, nil)
 	reqest.Header.Add("Cookie", cookie)
 	reqest.Header.Add("x-requested-with", "XMLHttpRequest")
-	//处理返回结果
+	//处理返回结果，已经签到过也认为是成功
 	response, err := client.Do(reqest)
 	if err != nil {
 		panic(err)
