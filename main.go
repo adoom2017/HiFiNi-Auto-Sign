@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/httputil"
 	"os"
 	"strings"
 	"time"
@@ -53,7 +54,15 @@ func SignIn(client *http.Client) string {
 		return ""
 	}
 	defer response.Body.Close()
-	fmt.Println("响应Cookies:", response.Header.Get("Cookie"))
+
+	// 打印完整的 HTTP 响应内容
+	dump, err := httputil.DumpResponse(response, true)
+	if err != nil {
+		fmt.Println("无法打印响应:", err)
+		return ""
+	}
+
+	fmt.Println(string(dump))
 
 	buf, err := io.ReadAll(response.Body)
 	if err != nil {
