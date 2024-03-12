@@ -53,6 +53,7 @@ func SignIn(client *http.Client) string {
 		return ""
 	}
 	defer response.Body.Close()
+	fmt.Println("响应Cookies:", response.Header.Get("Cookie"))
 
 	buf, err := io.ReadAll(response.Body)
 	if err != nil {
