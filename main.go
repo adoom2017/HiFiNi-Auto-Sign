@@ -38,6 +38,9 @@ func SignIn(client *http.Client) string {
 		fmt.Println("COOKIES不存在，请检查是否添加")
 		return ""
 	}
+
+	fmt.Println("cookies:", cookie)
+
 	//提交请求，修改变化
 	reqest, err := http.NewRequest("POST", url, nil)
 	if err != nil {
