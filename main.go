@@ -39,8 +39,6 @@ func SignIn(client *http.Client) string {
 		return ""
 	}
 
-	fmt.Println("cookies:", cookie)
-
 	//提交请求，修改变化
 	reqest, err := http.NewRequest("POST", url, nil)
 	if err != nil {
@@ -72,7 +70,5 @@ func SignIn(client *http.Client) string {
 		fmt.Println("获取签到结果失败: ", err)
 		return ""
 	}
-
-	fmt.Println(string(buf))
 	return string(buf)
 }
