@@ -48,6 +48,7 @@ func SignIn(client *http.Client) string {
 
 	reqest.Header.Add("Cookie", cookie)
 	reqest.Header.Add("x-requested-with", "XMLHttpRequest")
+	reqest.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36")
 	//处理返回结果，已经签到过也认为是成功
 	response, err := client.Do(reqest)
 	if err != nil {
