@@ -1,75 +1,27 @@
 package main
 
 import (
-	"fmt"
-	"io"
+	"hifini/model"
+	"hifini/utils"
+	"log"
 	"net/http"
-	"net/http/httputil"
 	"os"
-	"strings"
 	"time"
 )
 
 func main() {
-	client := &http.Client{}
-
-	for i := 0; i < 2; i++ {
-		result := SignIn(client)
-		if strings.Contains(result, "成功") || strings.Contains(result, "已经签过") {
-			fmt.Println("签到成功!!!")
-			return
-		} else if strings.Contains(result, "正在进行人机识别") {
-			fmt.Println("人机识别，等待后重试")
-			time.Sleep(5 * time.Second)
-			continue
-		} else {
-			fmt.Println("签到失败!!!")
-			os.Exit(3)
-		}
-	}
-}
-
-// SignIn 签到
-func SignIn(client *http.Client) string {
-	//生成要访问的url
-	url := "https://www.hifini.com/sg_sign.htm"
-	cookie := os.Getenv("COOKIES")
-	if cookie == "" {
-		fmt.Println("COOKIES不存在，请检查是否添加")
-		return ""
+	so := model.SignInObject{
+		URL:    "https://www.hifini.com/sg_sign.htm",
+		Client: &http.Client{Timeout: time.Second * 3},
+		Cookie: os.Getenv("COOKIES"),
 	}
 
-	//提交请求，修改变化
-	reqest, err := http.NewRequest("POST", url, nil)
+	err := so.Process()
 	if err != nil {
-		fmt.Println("创建请求失败: ", err)
-		return ""
+		log.Println("签到失败：", err)
+	} else {
+		log.Println("签到成功：", so.String())
 	}
 
-	reqest.Header.Add("Cookie", cookie)
-	reqest.Header.Add("x-requested-with", "XMLHttpRequest")
-	reqest.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36")
-	//处理返回结果，已经签到过也认为是成功
-	response, err := client.Do(reqest)
-	if err != nil {
-		fmt.Println("请求签到失败: ", err)
-		return ""
-	}
-	defer response.Body.Close()
-
-	// 打印完整的 HTTP 响应内容
-	dump, err := httputil.DumpResponse(response, true)
-	if err != nil {
-		fmt.Println("无法打印响应:", err)
-		return ""
-	}
-
-	fmt.Println(string(dump))
-
-	buf, err := io.ReadAll(response.Body)
-	if err != nil {
-		fmt.Println("获取签到结果失败: ", err)
-		return ""
-	}
-	return string(buf)
+	utils.SendMessage(os.Getenv("TG_TOKEN"), os.Getenv("TG_CHAT_ID"), so.String())
 }
