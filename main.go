@@ -23,5 +23,14 @@ func main() {
 		log.Println("签到成功：", so.String())
 	}
 
-	utils.SendMessage(os.Getenv("TG_TOKEN"), os.Getenv("TG_CHAT_ID"), so.String())
+	token := os.Getenv("TG_TOKEN")
+	id := os.Getenv("TG_CHAT_ID")
+	if token != "" && id != "" {
+		t := utils.Telegram{
+			Token:  token,
+			ChatID: id,
+		}
+
+		utils.Sending(t, so.String())
+	}
 }

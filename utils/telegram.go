@@ -2,24 +2,30 @@ package utils
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 )
 
-func SendMessage(botToken, chatID, text string) {
-	apiURL := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", botToken)
+type Telegram struct {
+	Token  string
+	ChatID string
+}
+
+func (t Telegram) SendMessage(text string) {
+	apiURL := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", t.Token)
 
 	data := url.Values{
-		"chat_id": {chatID},
+		"chat_id": {t.ChatID},
 		"text":    {text},
 	}
 
 	resp, err := http.PostForm(apiURL, data)
 	if err != nil {
-		fmt.Printf("Error sending message: %v\n", err)
+		log.Printf("Error sending message: %v\n", err)
 		return
 	}
 	defer resp.Body.Close()
 
-	fmt.Printf("Message sent, response status: %s\n", resp.Status)
+	log.Printf("Message sent, response status: %s\n", resp.Status)
 }

@@ -20,3 +20,11 @@ func GetSign(matched string) string {
 func GetUsername(matched string) string {
 	return regexpMatch(matched, "<li class=\"nav-item username\"><a class=\"nav-link\" href=\"my.htm\"><img class=\"avatar-1\" src=\".*?\"> (.*?)</a></li>")
 }
+
+type Message interface {
+	SendMessage(text string)
+}
+
+func Sending(m Message, text string) {
+	m.SendMessage(text)
+}
