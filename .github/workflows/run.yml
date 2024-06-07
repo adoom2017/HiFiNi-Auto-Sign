@@ -5,7 +5,7 @@ on:
         branches:
             - master
     schedule:
-        - cron: '1 16 * * *'
+        - cron: '1 16 * * *'  # 北京时间 00:01
 
 jobs:
     build:
@@ -16,8 +16,10 @@ jobs:
             - name: Set go
               uses: actions/setup-go@v3
               with:
-                go-version: '^1.14'
+                go-version: '^1.22'
             - name: HIFINI 自动签到
               env:
                 COOKIES: ${{ secrets.COOKIES }}
+                TG_TOKEN: ${{ secrets.TG_TOKEN }}
+                TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
               run: go run main.go
