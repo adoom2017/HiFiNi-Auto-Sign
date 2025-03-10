@@ -16,4 +16,4 @@ HiFiNi-音乐磁场自动签到
 | TG_TOKEN     | Telegram Bot Token       | 否       |
 
 ![https://cdn.jsdelivr.net/gh/Xramas/Repository@master/files/2023/1/30/31691c9e56554d2e11e7539aa5531015.png](https://cdn.jsdelivr.net/gh/Xramas/Repository@master/files/2023/1/30/31691c9e56554d2e11e7539aa5531015.png)
-111
+11122222222222
